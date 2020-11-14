@@ -30,7 +30,7 @@ public class OrderBOImplTest {
 	@Test
 	public void placeOrderShouldCreateAnOrder() throws SQLException, BOException {
 		Order order = new Order();
-		when(dao.create(order)).thenReturn(new Integer(1));
+		when(dao.create(any(Order.class))).thenReturn(new Integer(1));
 		boolean result = bo.placeOrder(order);
 		assertTrue(result);
 		verify(dao).create(order);
@@ -77,7 +77,7 @@ public class OrderBOImplTest {
 	@Test(expected = BOException.class)
 	public void cancelOrderShouldThrowBOExceptionOnRead()  throws SQLException, BOException {
 		Order order = new Order();
-		when(dao.read(23)).thenThrow(SQLException.class);
+		when(dao.read(anyInt())).thenThrow(SQLException.class);
 		when(dao.update(order)).thenReturn(0);
 		bo.cancelOrder(23);
 
