@@ -90,4 +90,26 @@ public class OrderBOImplTest {
 		when(dao.update(order)).thenThrow(SQLException.class);
 		bo.cancelOrder(23);
 	}
+	
+	@Test
+	public void deleteOrderShouldDeleteAnOrder()  throws SQLException, BOException {
+		when(dao.delete(23)).thenReturn(1);
+		boolean result = bo.deleteOrder(23);
+		assertTrue(result);
+		verify(dao).delete(23);
+	}
+	
+	@Test
+	public void deleteOrderShouldNotDeleteAnOrder()  throws SQLException, BOException {
+		when(dao.delete(23)).thenReturn(0);
+		boolean result = bo.deleteOrder(23);
+		assertFalse(result);
+		verify(dao).delete(23);
+	}
+	
+	@Test(expected = BOException.class)
+	public void deleteOrderShouldThrowBOException()  throws SQLException, BOException {
+		when(dao.delete(23)).thenThrow(SQLException.class);
+		bo.deleteOrder(23);
+	}
 }
