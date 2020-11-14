@@ -104,7 +104,9 @@ public class OrderBOImplTest {
 		when(dao.delete(23)).thenReturn(0);
 		boolean result = bo.deleteOrder(23);
 		assertFalse(result);
-		verify(dao).delete(23);
+//		verify(dao).delete(23);
+//		verify(dao,times(2)).delete(23);
+		verify(dao,atLeast(1)).delete(23);
 	}
 	
 	@Test(expected = BOException.class)
